@@ -18,7 +18,7 @@ import GlobalHeader from './components/Global/Header.vue'
 		flex-direction: column;
 
 		main.page {
-			padding-inline: 20px;
+			padding: 20px;
 			width: min(100%, 1600px);
 			margin: 0 auto;
 		}

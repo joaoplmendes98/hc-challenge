@@ -14,9 +14,11 @@
                 <p>Orders</p>
             </router-link>
         </nav>
-        <div class="logged-user">
-            <figure />
-            <p>Logged User</p>
+        <div class="actions">
+            <div class="logged-user">
+                <figure />
+                <p>Logged User</p>
+            </div>
         </div>
     </header>
 </template>
@@ -30,42 +32,66 @@
         padding-inline: 20px;
         width: min(100%, 1600px);
         margin: 0 auto;
+        background: white;
+        position: sticky;
+        top: 0;
 
         .logo {
-            height: 40px;
+            height: 32px;
             display: flex;
             align-items: center;
             gap: 8px;
             width: 20%;
+            user-select: none;
 
             img {
                 height: 100%;
                 object-fit: contain;
+                -webkit-user-drag: none;
             }
 
             h1 {
-                font-size: 1.2rem;
+                font-size: 1rem;
                 font-weight: 500;
             }
         }
 
-        .logged-user {
+        .actions {
             display: flex;
             align-items: center;
             justify-content: flex-end;
             gap: 8px;
             width: 20%;
 
-            figure {
-                height: 32px;
-                aspect-ratio: 1;
-                border-radius: 50%;
-                background-color: #ccc;
+
+            .logged-user {
+                padding: 8px;
+                border-radius: 6px;
+                width: fit-content;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                user-select: none;
+                transition: 0.2s;
+
+                &:hover {
+                    background: $grey-100;
+                }
+
+                figure {
+                    height: 28px;
+                    aspect-ratio: 1;
+                    border-radius: 50%;
+                    background-color: $grey-200;
+                }
+
+                p {
+                    font-size: 12px;
+                }
             }
 
-            p {
-                font-size: 12px;
-            }
+
         }
 
         nav {
@@ -84,11 +110,11 @@
                 transition: 0.2s;
 
                 &:hover {
-                    background-color: #f0f0f07a;
+                    background-color: $grey-100;
                 }
 
                 &.router-link-active {
-                    background-color: #f0f0f0;
+                    background-color: $grey-200;
                 }
 
                 figure {
