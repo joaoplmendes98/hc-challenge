@@ -2,10 +2,12 @@
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUsers } from '@/stores/users'
+import { useModal } from '@/stores/modal'
 import type { IUser, ITableBody, ITableHead, ITableOptions } from '@/interfaces'
 import { convertDateWithTime } from '@/assets/helpers/dateHandler'
 import TableComponent from '@/components/Global/Table/Index.vue'
 import BreadcrumbsComponent from '@/components/Global/Breadcrumbs.vue'
+import form from '@/assets/json/users/form.json'
 
 // Page BreadCrumbs
 const breadcrumbs = [
@@ -19,6 +21,13 @@ const breadcrumbs = [
 	active: true
   }
 ]
+
+// Forms
+const createForm = {
+	title: 'Create User',
+	form,
+	buttonText: 'submit'
+}
 
 // Fetch data on component load
 useUsers().fetchData()
@@ -71,6 +80,9 @@ const handleAction = ([id, action]: [number, string]) => {
 	console.log(id);
 	
 	switch (action) {
+		case 'create':
+			useModal().initModal('form', createForm)
+			break;
 		case 'orders':
 			break;
 		case 'edit':

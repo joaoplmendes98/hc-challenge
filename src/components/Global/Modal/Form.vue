@@ -1,0 +1,65 @@
+<script lang="ts" setup>
+import { storeToRefs } from 'pinia'
+import { useModal } from '@/stores/modal'
+import GlobalForm from '@/components/Global/Form/Index.vue'
+
+const { modalData } = storeToRefs(useModal())
+</script>
+
+<template>
+    <section>
+        <header>
+            <h2 class="md-title">{{modalData.title}}</h2>
+        </header>
+        <div class="content">
+            <GlobalForm :data="modalData.form" id="modal-form" />
+        </div>
+        <footer>
+            <button type="submit" form="modal-form">
+                {{modalData.buttonText}}
+            </button>
+        </footer>
+    </section>
+</template>
+
+<style lang="scss" scoped>
+    section {
+        height: min(100%, 700px);
+        width: min(100%, 500px);
+        background: $white;
+        border-radius: 6px;
+
+        header, footer {
+            height: 60px;
+            padding-inline: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header {
+            border-bottom: solid 1px $grey-100;
+        }
+
+        footer {
+            border-top: solid 1px $grey-100;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+
+            button {
+                padding: 10px 20px;
+                border: none;
+                background: $black;
+                color: $white;
+                border-radius: 6px;
+                cursor: pointer;
+                text-transform: capitalize
+            }
+        }
+
+        .content {
+            height: calc(100% - 120px);
+            padding: 20px;
+        }
+    }
+</style>
