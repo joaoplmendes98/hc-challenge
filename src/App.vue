@@ -21,6 +21,9 @@ import GlobalHeader from './components/Global/Header.vue'
 			padding: 20px;
 			width: min(100%, 1600px);
 			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
 		}
 	}
 </style>

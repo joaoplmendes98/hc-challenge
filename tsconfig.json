@@ -12,6 +12,7 @@
     }
   ],
   "compilerOptions": {
+    "types": ["node"],
     "module": "es2020"
   }
 }

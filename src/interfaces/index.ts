@@ -1,4 +1,5 @@
 import type { IUser } from './users'
+import type { ITableOptions, ITableHead, ITableBody, IPagination } from './table'
 
 interface IGenericObject {
     [key: string]: any
@@ -6,5 +7,9 @@ interface IGenericObject {
 
 export type {
     IGenericObject,
+    ITableOptions,
+    ITableHead,
+    ITableBody,
+    IPagination,
     IUser
 }
