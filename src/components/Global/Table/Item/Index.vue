@@ -12,6 +12,12 @@ defineProps({
         default: () => 1
     }
 })
+
+const emit = defineEmits(['new-action'])
+
+const handleAction = (action: string) => {
+    emit('new-action', action)
+}
 </script>
 
 <template>
@@ -22,7 +28,7 @@ defineProps({
             :style="{'--column-size': `${columnSize}%`}"
             :class="{actions: item.template === 'actions'}"
         >
-            <TableRowTemplates :item="item" />
+            <TableRowTemplates :item="item" @new-action="handleAction"/>
         </div>
     </article>
 </template>

@@ -15,8 +15,16 @@ interface ITableBody {
     data: any
 }
 
+interface IPagination {
+    currentPage: number
+    itemsPerPage: number
+    totalPages: number
+    totalItems: number
+}
+
 export type {
     ITableOptions,
     ITableHead,
-    ITableBody
+    ITableBody,
+    IPagination
 }

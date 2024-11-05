@@ -5,8 +5,25 @@ import { useUsers } from '@/stores/users'
 import type { IUser, ITableBody, ITableHead, ITableOptions } from '@/interfaces'
 import { convertDateWithTime } from '@/assets/helpers/dateHandler'
 import TableComponent from '@/components/Global/Table/Index.vue'
+import BreadcrumbsComponent from '@/components/Global/Breadcrumbs.vue'
 
-const { data } = storeToRefs(useUsers())
+// Page BreadCrumbs
+const breadcrumbs = [
+  {
+	text: 'Home',
+	to: null
+  },
+  {
+	text: 'Users',
+	to: null,
+	active: true
+  }
+]
+
+// Fetch data on component load
+useUsers().fetchData()
+
+const { data, paginationData } = storeToRefs(useUsers())
 
 const tableOptions: ITableOptions = {
   pagination: true,
@@ -49,17 +66,45 @@ const tableBodyItems = computed(() => data.value.map((user: IUser): ITableBody[]
 	}
 ])))
 
+// Handle actions
+const handleAction = ([id, action]: [number, string]) => {
+	console.log(id);
+	
+	switch (action) {
+		case 'orders':
+			break;
+		case 'edit':
+			break;
+		case 'delete':
+			break;
+	}
+}
 
-// Fetch data on component load
-useUsers().fetchData()
+const handleQuery = (query: string) => {
+	useUsers().setQuery(query)
+}
 </script>
 
 <template>
-  <main>
+	<div class="page-head">
+		<h1 class="lg-title">
+			Users
+		</h1>
+		<BreadcrumbsComponent :data="breadcrumbs" />
+	</div>
     <TableComponent
 		:options="tableOptions"
 		:head="tableHead"
 		:body="tableBodyItems"
+		:pagination="paginationData"
+		@new-action="handleAction"
+		@new-query="handleQuery"
 	/>
-  </main>
 </template>
+
+<style lang="scss" scoped>
+.page-head {
+	display: flex;
+	flex-direction: column;
+}
+</style>

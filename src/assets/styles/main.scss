@@ -10,3 +10,42 @@
 body {
 	background: $grey-100;
 }
+
+// Clear default input styles
+input {
+	border: none;
+	outline: none;
+	background: unset;
+	font-size: 12px;
+
+	&::placeholder {
+		font-weight: 400;
+		color: $grey-300;
+	}
+}
+
+// titles
+.lg-title {
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: $black;
+}
+
+// Default icon style
+figure.icon {
+	height: 16px;
+	aspect-ratio: 1;
+
+	&::after {
+		content: '';
+		width: 100%;
+		height: 100%;
+		display: flex;
+		-webkit-mask: var(--icon) no-repeat 50% 50%;
+		mask: var(--icon) no-repeat 50% 50%;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+		transition: 0.2s;
+		background: $black
+	}
+}

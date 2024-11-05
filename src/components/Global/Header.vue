@@ -6,12 +6,8 @@
         </figure>
         <nav>
             <router-link to="/">
-                <figure :style="{ '--icon': 'url(/icons/user.svg)' }"></figure>
+                <figure class="icon" :style="{ '--icon': 'url(/icons/user.svg)' }" />
                 <p>Users</p>
-            </router-link>
-            <router-link to="/orders">
-                <figure :style="{ '--icon': 'url(/icons/order.svg)' }"></figure>
-                <p>Orders</p>
             </router-link>
         </nav>
         <div class="actions">
@@ -115,24 +111,6 @@
 
                 &.router-link-active {
                     background-color: $grey-200;
-                }
-
-                figure {
-                    height: 16px;
-                    aspect-ratio: 1;
-
-                    &::after {
-                        content: '';
-                        width: 100%;
-                        height: 100%;
-                        display: flex;
-                        -webkit-mask: var(--icon) no-repeat 50% 50%;
-                        mask: var(--icon) no-repeat 50% 50%;
-                        -webkit-mask-size: contain;
-                        mask-size: contain;
-                        transition: 0.2s;
-                        background: black
-                    }
                 }
 
                 p {
