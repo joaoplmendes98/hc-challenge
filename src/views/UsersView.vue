@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-const data = ref(null)
+import { useUsers } from '@/stores/users'
+import { storeToRefs } from 'pinia'
 
-const fetchData = async () => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/users`)
-  const json = await response.json()
+const { data } = storeToRefs(useUsers())
 
-  data.value = json
-}
-
-fetchData()
-
+useUsers().fetchData()
 </script>
 
 <template>
