@@ -9,8 +9,12 @@ const handleFormSubmition = async (data: any) => {
     const submition = await modalData.value.onSubmit(data)
 
     if (submition) {
-        useModal().closeModal()
+        closeModal()
     }
+}
+
+const closeModal = () => {
+    useModal().closeModal()
 }
 </script>
 
@@ -18,6 +22,7 @@ const handleFormSubmition = async (data: any) => {
     <section>
         <header>
             <h2 class="md-title">{{modalData.title}}</h2>
+            <button type="button" class="close" @click="closeModal" />
         </header>
         <div class="content">
             <GlobalForm :data="modalData.form" id="modal-form" @form-submit="handleFormSubmition" />
@@ -47,6 +52,35 @@ const handleFormSubmition = async (data: any) => {
 
         header {
             border-bottom: solid 1px $grey-100;
+            justify-content: space-between;
+
+            .close {
+                background: none;
+                border: none;
+                cursor: pointer;
+                height: 32px;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                @include flex-center;
+                background: $grey-200;
+                position: relative;
+
+                &::before, &::after {
+                    content: '';
+                    position: absolute;
+                    background: $black;
+                    height: 1px;
+                    width: 10px;
+                }
+
+                &::before {
+                    transform: rotate(55deg);
+                }
+
+                &::after {
+                    transform: rotate(-55deg);
+                }
+            }
         }
 
         footer {
