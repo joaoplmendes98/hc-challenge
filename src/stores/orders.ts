@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import type { IOrder, IPagination, IGenericObject } from '@/interfaces'
 import { useAlerts } from './alerts'
 import api from  '@/assets/helpers/api'
+import { convertToCamelCase } from '@/assets/helpers/globalHelper'
 
 interface OrdersStoreState {
 	entries: IOrder[],
@@ -91,17 +92,8 @@ export const useOrders = defineStore('orders', {
                 useAlerts().addAlert('error', response.data.message)
                 return
             }
-
-            // Convert all snake_case keys to camelCase
-            const data = response.data.map((entry: IGenericObject) => {
-                const camelCaseEntry: IGenericObject = {}
-                for (const key in entry) {
-                    camelCaseEntry[key.replace(/_(\w)/g, (match, p1) => p1.toUpperCase())] = entry[key]
-                }
-                return camelCaseEntry
-            })
             
-			this.entries = data as IOrder[]
+			this.entries = convertToCamelCase(response.data) as IOrder[]
         },
 
         setQuery(query: string) {

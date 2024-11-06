@@ -36,8 +36,8 @@ const type = computed(() => {
 
 <template>
     <div class="form-item">
-        <label for="input">{{item.label}} {{ item.required ? '*' : '' }}</label>
-        <input :type="type" v-model="value" :required="item.required" />
+        <label :for="item.tag">{{item.label}} {{ item.required ? '*' : '' }}</label>
+        <input :id="item.tag" :type="type" v-model="value" :required="item.required" />
         <figure v-if="item.type === 'password'" class="icon" :style="{'--icon': 'url(/icons/eye.svg)'}" @click="handleTogglePassword" />
     </div>
 </template>

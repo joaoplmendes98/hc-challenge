@@ -1,7 +1,6 @@
 interface IUser {
     id: number
-    fullName?: string
-    full_name?: string
+    fullName: string
     email: string
     createdAt: string
     updatedAt: string

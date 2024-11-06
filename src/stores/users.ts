@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import type { IUser, IPagination, IGenericObject } from '@/interfaces'
 import { useAlerts } from './alerts'
 import api from  '@/assets/helpers/api'
+import { convertToCamelCase } from '@/assets/helpers/globalHelper'
 
 interface UsersStoreState {
 	entries: IUser[],
@@ -152,8 +153,10 @@ export const useUsers = defineStore('users', {
             if (response.status !== 200) {
                 return null
             }
+            
 
-            return response.data
+            const userData = convertToCamelCase([response.data])[0]
+            return userData as IUser
         },
 
         clearData() {

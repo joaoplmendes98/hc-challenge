@@ -31,7 +31,7 @@ const breadcrumbs = computed(() => ([
     to: '/',
   },
   {
-    text: user.value?.full_name || 'Loading',
+    text: user.value?.fullName || 'Loading',
     to: null
   },
   {
@@ -84,7 +84,7 @@ const tableBodyItems = computed(() => data.value.map((entry: IOrder): ITableBody
 	},
 	{
 		template: 'text',
-		data: user.value?.full_name || 'Loading'
+		data: user.value?.fullName || 'Loading'
 	},
 	{
 		template: 'text',
