@@ -94,6 +94,10 @@ export const useUsers = defineStore('users', {
             this.sort = [tag, currentDirection + 1]
         },
 
+        setPage(direction: number) {
+            this.currentPage += direction
+        },
+
         async createEntry(data: IGenericObject): Promise<boolean> {
             const response = await api.post('users', data)
 

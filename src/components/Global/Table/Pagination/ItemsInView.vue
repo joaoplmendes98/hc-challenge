@@ -10,14 +10,10 @@ const props = defineProps({
 })
 
 const seeingItems = computed(() => {
-    if (props.data.totalItems < props.data.itemsPerPage) {
-        return `1 to ${props.data.totalItems}`
-    }
+    const startItem = (props.data.currentPage - 1) * props.data.itemsPerPage + 1
+    const endItem = Math.min(props.data.currentPage * props.data.itemsPerPage, props.data.totalItems)
 
-    const maxPageItems = ((props.data.currentPage + 1) * props.data.itemsPerPage) - 1
-    const minPageItems = props.data.currentPage * props.data.itemsPerPage
-
-    return maxPageItems > props.data.totalItems ? `${minPageItems + 1} to ${props.data.totalItems}` : `${minPageItems + 1} to ${maxPageItems}`
+    return `${startItem} to ${endItem}`
 })
 </script>
 

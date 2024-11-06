@@ -133,10 +133,10 @@ const handleAction = ([id, action]: [number, string]) => {
 			useModal().initModal('form', createForm)
 			break;
 		case 'see':
-				router.push(`/user/${id}/orders`)
+			router.push(`/user/${id}/orders`)
 			break;
 		case 'orders':
-				router.push(`/user/${id}/orders`)
+			router.push(`/user/${id}/orders`)
 			break;
 		case 'edit':
 			setUpdateForm(id)
@@ -153,6 +153,10 @@ const handleQuery = (query: string) => {
 
 const handleSort = (tag: string) => {
 	useUsers().setSort(tag)
+}
+
+const handlePagination = (direction: number) => {
+	useUsers().setPage(direction)
 }
 </script>
 
@@ -172,6 +176,7 @@ const handleSort = (tag: string) => {
 		@new-action="handleAction"
 		@new-query="handleQuery"
 		@new-sort="handleSort"
+		@new-page="handlePagination"
 	/>
 </template>
 

@@ -27,10 +27,14 @@ const props = defineProps({
     sortData: {
         type: Array,
         default: () => ([null, 0])
+    },
+    filtersData: {
+        type: Object,
+        default: () => ({})
     }
 })
 
-const emit = defineEmits(['new-action', 'new-query', 'new-sort'])
+const emit = defineEmits(['new-action', 'new-query', 'new-sort', 'new-page', 'new-filter'])
 
 const availableWidth = computed(() => props.options.actions ? 92 : 100)
 
@@ -44,6 +48,14 @@ const handleQuery = (query: string) => {
 
 const handleSort = (tag: string) => {
     emit('new-sort', tag)
+}
+
+const handleFilter = ([tag, filter]: [string, string]) => {
+    emit('new-filter', [tag, filter])
+}
+
+const handlePagination = (direction: number) => {
+    emit('new-page', direction)
 }
 </script>
 
@@ -65,7 +77,9 @@ const handleSort = (tag: string) => {
                     :data="item"
                     :column-size="availableWidth / head.length"
                     :sort-data="sortData"
+                    :filters-data="item.tag ? filtersData[item.tag] : []"
                     @sort="handleSort"
+                    @filter="handleFilter"
                 />
                 <div class="actions__column">
                     <p>Actions</p>
@@ -85,7 +99,7 @@ const handleSort = (tag: string) => {
                 </p>
             </div>
         </div>
-        <PaginationComponent v-if="options.pagination" :data="pagination" />
+        <PaginationComponent v-if="options.pagination" :data="pagination" @new-page="handlePagination" />
     </div>
 </template>
 
