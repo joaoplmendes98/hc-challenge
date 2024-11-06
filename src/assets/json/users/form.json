@@ -1,0 +1,23 @@
+[
+    {
+        "template": "input",
+        "type": "text",
+        "label": "Full Name",
+        "tag": "fullName",
+        "required": true
+    },
+    {
+        "template": "input",
+        "type": "email",
+        "label": "Email",
+        "tag": "email",
+        "required": true
+    },
+    {
+        "template": "input",
+        "type": "password",
+        "label": "Password",
+        "tag": "password",
+        "required": true
+    }
+]

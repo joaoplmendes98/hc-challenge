@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import GlobalHeader from './components/Global/Header.vue'
+import GlobalModal from './components/Global/Modal/Index.vue'
+import { useModal } from './stores/modal'
+import { storeToRefs } from 'pinia'
+
+const { showModal } = storeToRefs(useModal())
+
 </script>
 
 <template>
 	<div class="encapsulator">
 		<GlobalHeader />
+		<GlobalModal v-if="showModal" />
 		<main class="page">
 			<RouterView />
 		</main>
