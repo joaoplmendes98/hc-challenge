@@ -143,6 +143,15 @@ export const useUsers = defineStore('users', {
             }
 
             return response.data
+        },
+
+        clearData() {
+            this.entries = []
+            this.query = ''
+            this.isDataLoaded = false
+            this.currentPage = 1
+            this.itemsPerPage = 10
+            this.sort = [null, 0]
         }
     },
 })

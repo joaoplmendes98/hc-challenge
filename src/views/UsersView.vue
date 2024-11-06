@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUsers } from '@/stores/users'
 import { useModal } from '@/stores/modal'
@@ -158,6 +158,11 @@ const handleSort = (tag: string) => {
 const handlePagination = (direction: number) => {
 	useUsers().setPage(direction)
 }
+
+// component unmount
+onUnmounted(() => {
+	useUsers().clearData()
+})
 </script>
 
 <template>

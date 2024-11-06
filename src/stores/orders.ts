@@ -187,6 +187,15 @@ export const useOrders = defineStore('orders', {
 
             this.entries = this.entries.filter(entry => entry.id !== id)
             return true
+        },
+
+        clearData() {
+            this.entries = []
+            this.query = ''
+            this.isDataLoaded = false
+            this.currentPage = 1
+            this.sort = [null, 0]
+            this.filters = {}
         }
     },
 })

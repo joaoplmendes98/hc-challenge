@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, type ComputedRef } from 'vue'
+import { computed, ref, type ComputedRef, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useOrders } from '@/stores/orders'
 import { useUsers } from '@/stores/users'
@@ -182,6 +182,11 @@ const handlePagination = (direction: number) => {
 const handleFilter = ([tag, filter]: [string, string]) => {
 	useOrders().setFilter(tag, filter)
 }
+
+// component unmount
+onUnmounted(() => {
+	useOrders().clearData()
+})
 </script>
 
 <template>
