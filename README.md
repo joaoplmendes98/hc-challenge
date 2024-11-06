@@ -4,7 +4,7 @@
 npm install
 ```
 
-Create a .env file and set the api url, by default should look like this:
+Create a `.env` file on project root and set the api url, by default should look like this:
 
 ```
 VITE_API_URL=http://localhost:3333/
