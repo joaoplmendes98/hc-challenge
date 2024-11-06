@@ -26,7 +26,8 @@ const handleAction = (action: string) => {
             v-for="(item, i) in data"
             :key="item.template + i"
             :style="{'--column-size': `${columnSize}%`}"
-            :class="{actions: item.template === 'actions'}"
+            :class="{actions: item.template === 'actions', 'pointer': i === 0}"
+            @click="i === 0 && handleAction('see')"
         >
             <TableRowTemplates :item="item" @new-action="handleAction"/>
         </div>
@@ -44,10 +45,15 @@ article {
         display: flex;
         align-items: center;
         width: var(--column-size);
+        height: 100%;
 
         &.actions {
             width: 8%;
             justify-content: flex-end;
+        }
+
+        &.pointer {
+            cursor: pointer;
         }
     }
 }
