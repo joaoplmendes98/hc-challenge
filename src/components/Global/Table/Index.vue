@@ -5,6 +5,7 @@ import TableRowComponent from '@/components/Global/Table/Item/Index.vue'
 import PaginationComponent from './Pagination/Index.vue'
 import QueryComponent from './Query.vue'
 import CreateButton from '@/components/Global/Buttons/Create.vue'
+import HeadItem from './HeadItem.vue'
 
 const props = defineProps({
     options: {
@@ -22,10 +23,14 @@ const props = defineProps({
     pagination: {
         type: Object as PropType<IPagination>,
         default: () => ({})
+    },
+    sortData: {
+        type: Array,
+        default: () => ([null, 0])
     }
 })
 
-const emit = defineEmits(['new-action', 'new-query'])
+const emit = defineEmits(['new-action', 'new-query', 'new-sort'])
 
 const availableWidth = computed(() => props.options.actions ? 92 : 100)
 
@@ -35,6 +40,10 @@ const handleAction = (id: number = 0, action: string) => {
 
 const handleQuery = (query: string) => {
     emit('new-query', query)
+}
+
+const handleSort = (tag: string) => {
+    emit('new-sort', tag)
 }
 </script>
 
@@ -50,9 +59,14 @@ const handleQuery = (query: string) => {
         </div>
         <div class="table">
             <header>
-                <div v-for="item in head" :key="item.label" :style="{width: `${availableWidth / head.length}%`}">
-                    <p>{{ item.label }}</p>
-                </div>
+                <HeadItem
+                    v-for="item in head"
+                    :key="item.label"
+                    :data="item"
+                    :column-size="availableWidth / head.length"
+                    :sort-data="sortData"
+                    @sort="handleSort"
+                />
                 <div class="actions__column">
                     <p>Actions</p>
                 </div>
@@ -100,21 +114,17 @@ const handleQuery = (query: string) => {
         height: 32px;
         display: flex;
         align-items: center;
-        padding-inline: 12px;
         position: sticky;
         top: 60px;
         background: $white;
         border-radius: 6px;
 
-        p {
-            font-size: 12px;
-            font-weight: 500;
-        }
-
         .actions__column {
+            padding-inline: 12px;
             width: 8%;
             display: flex;
             justify-content: flex-end;
+            font-size: 12px;
         }
     }
 

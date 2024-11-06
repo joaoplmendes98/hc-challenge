@@ -22,11 +22,15 @@ const seeingItems = computed(() => {
 </script>
 
 <template>
-    <p>Seeing items {{seeingItems}}</p>
+    <p>Seeing items <b>{{seeingItems}}</b> from <b>{{ data.totalItems }}</b></p>
 </template>
 
 <style lang="scss" scoped>
 p {
     font-size: 12px;
+
+    b {
+        font-weight: 500;
+    }
 }
 </style>

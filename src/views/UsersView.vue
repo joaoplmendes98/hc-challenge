@@ -28,7 +28,7 @@ const breadcrumbs = [
 // Fetch data on component load
 useUsers().fetchData()
 
-const { data, paginationData } = storeToRefs(useUsers())
+const { data, paginationData, sort } = storeToRefs(useUsers())
 
 const tableOptions: ITableOptions = {
 	pagination: true,
@@ -39,14 +39,17 @@ const tableOptions: ITableOptions = {
 const tableHead: ITableHead[] = [
 	{
 		label: 'Full Name',
+		tag: 'fullName',
 		sortable: true
 	},
 	{
 		label: 'Email',
+		tag: 'email',
 		sortable: true
 	},
 	{
 		label: 'Last Update',
+		tag: 'updatedAt',
 		sortable: true
 	}
 ]
@@ -147,6 +150,10 @@ const handleAction = ([id, action]: [number, string]) => {
 const handleQuery = (query: string) => {
 	useUsers().setQuery(query)
 }
+
+const handleSort = (tag: string) => {
+	useUsers().setSort(tag)
+}
 </script>
 
 <template>
@@ -161,8 +168,10 @@ const handleQuery = (query: string) => {
 		:head="tableHead"
 		:body="tableBodyItems"
 		:pagination="paginationData"
+		:sort-data="sort"
 		@new-action="handleAction"
 		@new-query="handleQuery"
+		@new-sort="handleSort"
 	/>
 </template>
 

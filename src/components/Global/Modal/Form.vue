@@ -6,10 +6,10 @@ import GlobalForm from '@/components/Global/Form/Index.vue'
 const { modalData } = storeToRefs(useModal())
 
 const handleFormSubmition = async (data: any) => {
-    const submition = await modalData.value.onSubmit(data)
+    const submition: boolean = await modalData.value.onSubmit(data)
 
     if (submition) {
-        closeModal()
+        useModal().closeModal()
     }
 }
 

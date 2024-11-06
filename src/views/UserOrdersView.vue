@@ -45,7 +45,7 @@ const breadcrumbs = computed(() => ([
 useOrders().fetchData(+userId)
 fetchAsyncUser()
 
-const { data, paginationData, uniqueProducts } = storeToRefs(useOrders())
+const { data, paginationData, uniqueProducts, sort } = storeToRefs(useOrders())
 
 const tableOptions: ITableOptions = {
 	pagination: true,
@@ -170,6 +170,10 @@ const handleAction = ([id, action]: [number, string]) => {
 const handleQuery = (query: string) => {
 	useOrders().setQuery(query)
 }
+
+const handleSort = (tag: string) => {
+	useOrders().setSort(tag)
+}
 </script>
 
 <template>
@@ -184,8 +188,10 @@ const handleQuery = (query: string) => {
 		:head="tableHead"
 		:body="tableBodyItems"
 		:pagination="paginationData"
+		:sort-data="sort"
 		@new-action="handleAction"
 		@new-query="handleQuery"
+		@new-sort="handleSort"
 	/>
 </template>
 

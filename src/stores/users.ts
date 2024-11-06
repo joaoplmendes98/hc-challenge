@@ -7,7 +7,8 @@ interface UsersStoreState {
     query: string,
     isDataLoaded: boolean,
     currentPage: number,
-    itemsPerPage: number
+    itemsPerPage: number,
+    sort: [string | null, number]
 }
 
 export const useUsers = defineStore('users', {
@@ -16,7 +17,8 @@ export const useUsers = defineStore('users', {
         query: '',
 		isDataLoaded: false,
         currentPage: 1,
-        itemsPerPage: 10
+        itemsPerPage: 10,
+        sort: [null, 0]
 	}),
 
     getters: {
@@ -40,7 +42,20 @@ export const useUsers = defineStore('users', {
         // Return entries paginated and queried
         data(): IUser[] {
             const query = this.query.toLowerCase()
-            const queriedEntries = this.entries.filter(entry => {
+            const sortedQueries = [...this.entries].sort((a, b) => {
+                const [tag, direction] = this.sort
+
+                if (!tag) {
+                    return 0
+                }
+
+                if (direction === 1) {
+                    return a[tag as keyof IUser]! > b[tag as keyof IUser]! ? 1 : -1
+                }
+
+                return a[tag as keyof IUser]! < b[tag as keyof IUser]! ? 1 : -1
+            })
+            const queriedEntries = sortedQueries.filter(entry => {
                 return entry.fullName!.toLowerCase().includes(query) || entry.email.toLowerCase().includes(query)
             }) 
 
@@ -61,6 +76,22 @@ export const useUsers = defineStore('users', {
 
         setQuery(query: string) {
             this.query = query
+        },
+
+        setSort(tag: string) {
+            const [currentTag, currentDirection] = this.sort
+
+            if (currentTag !== tag) {
+                this.sort = [tag, 1]
+                return
+            }
+
+            if (currentDirection === 2) {
+                this.sort = [null, 0]
+                return
+            }
+
+            this.sort = [tag, currentDirection + 1]
         },
 
         async createEntry(data: IGenericObject): Promise<boolean> {
