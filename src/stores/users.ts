@@ -41,7 +41,7 @@ export const useUsers = defineStore('users', {
         data(): IUser[] {
             const query = this.query.toLowerCase()
             const queriedEntries = this.entries.filter(entry => {
-                return entry.fullName.toLowerCase().includes(query) || entry.email.toLowerCase().includes(query)
+                return entry.fullName!.toLowerCase().includes(query) || entry.email.toLowerCase().includes(query)
             }) 
 
             return queriedEntries.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
@@ -98,6 +98,16 @@ export const useUsers = defineStore('users', {
 
             this.entries = this.entries.filter(entry => entry.id !== id)
             return true
+        },
+
+        async fetchUserDetails(id: number): Promise<IUser | null> {
+            const response = await api.get(`user/${id}`)
+
+            if (response.status !== 200) {
+                return null
+            }
+
+            return response.data
         }
     },
 })

@@ -1,0 +1,9 @@
+[
+    {
+        "template": "input",
+        "type": "text",
+        "label": "Product",
+        "tag": "product",
+        "required": true
+    }
+]

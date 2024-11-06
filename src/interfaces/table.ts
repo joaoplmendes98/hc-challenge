@@ -6,7 +6,9 @@ interface ITableOptions {
 
 interface ITableHead {
     label: string
+    tag?: string
     sortable?: boolean
+    filters?: string[]
 }
 
 interface ITableBody {

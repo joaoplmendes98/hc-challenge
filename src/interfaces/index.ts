@@ -1,4 +1,5 @@
 import type { IUser } from './users'
+import type { IOrder } from './orders'
 import type { ITableOptions, ITableHead, ITableBody, IPagination } from './table'
 
 interface IGenericObject {
@@ -20,5 +21,6 @@ export type {
     ITableBody,
     IPagination,
     IUser,
+    IOrder,
     IFormField
 }

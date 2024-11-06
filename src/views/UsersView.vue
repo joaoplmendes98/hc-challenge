@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUsers } from '@/stores/users'
 import { useModal } from '@/stores/modal'
@@ -14,15 +14,15 @@ const router = useRouter()
 
 // Page BreadCrumbs
 const breadcrumbs = [
-  {
-	text: 'Home',
-	to: null
-  },
-  {
-	text: 'Users',
-	to: null,
-	active: true
-  }
+	{
+		text: 'Home',
+		to: null
+	},
+	{
+		text: 'Users',
+		to: null,
+		active: true
+	}
 ]
 
 // Fetch data on component load
@@ -31,24 +31,24 @@ useUsers().fetchData()
 const { data, paginationData } = storeToRefs(useUsers())
 
 const tableOptions: ITableOptions = {
-  pagination: true,
-  search: true,
-  actions: true
+	pagination: true,
+	search: true,
+	actions: true
 }
 
 const tableHead: ITableHead[] = [
-  {
-	label: 'Full Name',
-	sortable: true
-  },
-  {
-	label: 'Email',
-	sortable: true
-  },
-  {
-	label: 'Last Updated',
-	sortable: true
-  }
+	{
+		label: 'Full Name',
+		sortable: true
+	},
+	{
+		label: 'Email',
+		sortable: true
+	},
+	{
+		label: 'Last Updated',
+		sortable: true
+	}
 ]
 
 const tableBodyItems = computed(() => data.value.map((user: IUser): ITableBody[] => ([
@@ -103,7 +103,7 @@ const setDeleteWarning = (id: number) => {
 
 	const warningData = {
 		title: 'Delete User',
-		message: `You're about to delete <b>${entry!.fullName}</b>.<br>Are you sure?`,
+		message: `You're about to delete <b>${entry!.fullName}</b>.<br>Are you sure you want to proceed?`,
 		actions: [
 			{
 				back: true,

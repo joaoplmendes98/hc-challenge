@@ -24,6 +24,14 @@ input {
 	}
 }
 
+// Clear default button styles
+button {
+	border: none;
+	outline: none;
+	background: unset;
+	cursor: pointer;
+}
+
 // titles
 .lg-title {
 	font-size: 1.5rem;
