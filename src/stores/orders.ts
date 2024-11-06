@@ -154,7 +154,7 @@ export const useOrders = defineStore('orders', {
                 return false
             }
             
-            this.entries.unshift(response.data)
+            this.entries.push(response.data)
             useAlerts().addAlert('success', 'Order created successfully')
             return true
         },

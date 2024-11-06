@@ -132,7 +132,7 @@ const setDeleteWarning = (id: number) => {
 
 	const warningData = {
 		title: 'Delete Order',
-		message: `You're about to delete the order for <b>${entry!.product}</b>.<br>Are you sure you want to proceed?`,
+		message: `You're about to delete an order from <b>${user.value?.fullName}</b> for <b>${entry!.product}</b>.<br>Are you sure you want to proceed?`,
 		actions: [
 			{
 				back: true,
