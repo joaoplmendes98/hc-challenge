@@ -41,6 +41,12 @@ const sortingClass = computed(() => {
 // Handle Filtering
 const showFiltersTab = ref(false)
 
+const handleCloseDropdown = () => {
+    if (!showFiltersTab.value) return
+    
+    showFiltersTab.value = false
+}
+
 const toggleFilter = (filter: string) => {
     emit('filter', [props.data.tag, filter])
 }
@@ -53,7 +59,7 @@ const toggleFilter = (filter: string) => {
             <figure class="icon" :style="{'--icon': 'url(/icons/triangle.svg)'}" />
             <figure class="icon invert" :style="{'--icon': 'url(/icons/triangle.svg)'}" />
         </div>
-        <div v-if="data.filters" class="filter" :class="{active: showFiltersTab || filtersData.length}">
+        <div v-if="data.filters" class="filter" :class="{active: showFiltersTab || filtersData.length}" v-click-outside="handleCloseDropdown">
             <figure class="icon" :style="{'--icon': 'url(/icons/filter.svg)'}" @click="showFiltersTab = !showFiltersTab" />
             <div v-show="showFiltersTab" class="available-filters">
                 <h6>Filters</h6>
