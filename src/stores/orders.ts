@@ -8,7 +8,8 @@ interface OrdersStoreState {
     isDataLoaded: boolean,
     currentPage: number,
     itemsPerPage: number,
-    sort: [string | null, number]
+    sort: [string | null, number],
+    filters: IGenericObject
 }
 
 export const useOrders = defineStore('orders', {
@@ -18,16 +19,17 @@ export const useOrders = defineStore('orders', {
 		isDataLoaded: false,
         currentPage: 1,
         itemsPerPage: 10,
-        sort: [null, 0]
+        sort: [null, 0],
+        filters: {}
 	}),
 
     getters: {
         totalPages(): number {
-            return Math.ceil(this.entries.length / this.itemsPerPage)
+            return Math.ceil(this.filteredEntries.length / this.itemsPerPage)
         },
 
         totalItems(): number {
-            return this.entries.length
+            return this.filteredEntries.length
         },
 
         paginationData(): IPagination {
@@ -43,10 +45,22 @@ export const useOrders = defineStore('orders', {
             return [...new Set(this.entries.map(entry => entry.product))]
         },
 
+        filteredEntries(): IOrder[] {
+            return this.entries.filter(entry => {
+                for (const tag in this.filters) {
+                    if (!this.filters[tag].includes(entry[tag as keyof IOrder]!)) {
+                        return false
+                    }
+                }
+                return true
+            })
+        },
+
         // Return entries paginated and queried
         data(): IOrder[] {
             const query = this.query.toLowerCase()
-            const sortedQueries = [...this.entries].sort((a, b) => {
+
+            const sortEntries = [...this.filteredEntries].sort((a, b) => {
                 const [tag, direction] = this.sort
 
                 if (!tag) {
@@ -59,11 +73,12 @@ export const useOrders = defineStore('orders', {
 
                 return a[tag as keyof IOrder]! < b[tag as keyof IOrder]! ? 1 : -1
             })
-            const queriedEntries = sortedQueries.filter(entry => {
+
+            const queryEntries = sortEntries.filter(entry => {
                 return entry.product!.toLowerCase().includes(query)
             })
 
-            return queriedEntries.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
+            return queryEntries.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
         }
     },
 
@@ -109,6 +124,26 @@ export const useOrders = defineStore('orders', {
 
         setPage(direction: number) {
             this.currentPage += direction
+        },
+
+        setFilter(tag: string, value: string) {
+            if (!this.filters[tag]) {
+                this.filters[tag] = [value]
+                return
+            }
+
+            const index = this.filters[tag].indexOf(value)
+
+            if (index === -1) {
+                this.filters[tag].push(value)
+                return
+            }
+
+            this.filters[tag].splice(index, 1)
+
+            if (!this.filters[tag].length) {
+                delete this.filters[tag]
+            }
         },
 
         async createEntry(data: IGenericObject, userId: string): Promise<boolean> {

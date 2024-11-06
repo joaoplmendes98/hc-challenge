@@ -133,10 +133,10 @@ const handleAction = ([id, action]: [number, string]) => {
 			useModal().initModal('form', createForm)
 			break;
 		case 'see':
-				router.push(`/user/${id}/orders`)
+			router.push(`/user/${id}/orders`)
 			break;
 		case 'orders':
-				router.push(`/user/${id}/orders`)
+			router.push(`/user/${id}/orders`)
 			break;
 		case 'edit':
 			setUpdateForm(id)

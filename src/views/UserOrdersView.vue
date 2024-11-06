@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, type ComputedRef } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useOrders } from '@/stores/orders'
 import { useUsers } from '@/stores/users'
@@ -45,7 +45,7 @@ const breadcrumbs = computed(() => ([
 useOrders().fetchData(+userId)
 fetchAsyncUser()
 
-const { data, paginationData, uniqueProducts, sort } = storeToRefs(useOrders())
+const { data, paginationData, uniqueProducts, sort, filters } = storeToRefs(useOrders())
 
 const tableOptions: ITableOptions = {
 	pagination: true,
@@ -53,7 +53,7 @@ const tableOptions: ITableOptions = {
 	actions: true
 }
 
-const tableHead: ITableHead[] = [
+const tableHead: ComputedRef<ITableHead[]> = computed(() => ([
 	{
 		label: 'Product',
 		tag: 'product',
@@ -74,7 +74,7 @@ const tableHead: ITableHead[] = [
 		tag: 'updatedDate',
 		sortable: true
 	}
-]
+]))
 
 const tableBodyItems = computed(() => data.value.map((entry: IOrder): ITableBody[] => ([
 	{
@@ -178,6 +178,10 @@ const handleSort = (tag: string) => {
 const handlePagination = (direction: number) => {
 	useOrders().setPage(direction)
 }
+
+const handleFilter = ([tag, filter]: [string, string]) => {
+	useOrders().setFilter(tag, filter)
+}
 </script>
 
 <template>
@@ -193,10 +197,12 @@ const handlePagination = (direction: number) => {
 		:body="tableBodyItems"
 		:pagination="paginationData"
 		:sort-data="sort"
+		:filters-data="filters"
 		@new-action="handleAction"
 		@new-query="handleQuery"
 		@new-sort="handleSort"
 		@new-page="handlePagination"
+		@new-filter="handleFilter"
 	/>
 </template>
 
