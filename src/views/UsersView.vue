@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useUsers } from '@/stores/users'
 import { useModal } from '@/stores/modal'
 import type { IUser, ITableBody, ITableHead, ITableOptions, IGenericObject, IFormField } from '@/interfaces'
-import { convertDateWithTime } from '@/assets/helpers/dateHandler'
+import { convertDateWithTimeDifference } from '@/assets/helpers/dateHandler'
 import TableComponent from '@/components/Global/Table/Index.vue'
 import BreadcrumbsComponent from '@/components/Global/Breadcrumbs.vue'
 import form from '@/assets/json/users/form.json'
@@ -66,7 +66,7 @@ const tableBodyItems = computed(() => data.value.map((user: IUser): ITableBody[]
 	},
 	{
 		template: 'text',
-		data: convertDateWithTime(user.updatedAt)
+		data: convertDateWithTimeDifference(user.updatedAt)
 	},
 	{
 		template: 'actions',

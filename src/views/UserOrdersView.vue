@@ -5,7 +5,7 @@ import { useOrders } from '@/stores/orders'
 import { useUsers } from '@/stores/users'
 import { useModal } from '@/stores/modal'
 import type {IOrder, IUser, ITableBody, ITableHead, ITableOptions, IGenericObject, IFormField } from '@/interfaces'
-import { convertDateWithTime } from '@/assets/helpers/dateHandler'
+import { convertDateWithTimeDifference } from '@/assets/helpers/dateHandler'
 import TableComponent from '@/components/Global/Table/Index.vue'
 import BreadcrumbsComponent from '@/components/Global/Breadcrumbs.vue'
 import form from '@/assets/json/orders/form.json'
@@ -71,7 +71,7 @@ const tableHead: ComputedRef<ITableHead[]> = computed(() => ([
 	},
 	{
 		label: 'Last Update',
-		tag: 'updatedDate',
+		tag: 'updatedAt',
 		sortable: true
 	}
 ]))
@@ -88,11 +88,11 @@ const tableBodyItems = computed(() => data.value.map((entry: IOrder): ITableBody
 	},
 	{
 		template: 'text',
-		data: convertDateWithTime(entry.orderDate)
+		data: convertDateWithTimeDifference(entry.orderDate)
 	},
 	{
 		template: 'text',
-		data: convertDateWithTime(entry.updatedAt)
+		data: convertDateWithTimeDifference(entry.updatedAt)
 	},
 	{
 		template: 'actions',

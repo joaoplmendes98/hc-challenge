@@ -3,7 +3,7 @@ const convertDate = (value: string) => {
 	return date.toISOString().slice(0, 10)
 }
 
-const convertDateWithTime = (value: string) => {
+const convertDateWithTimeDifference = (value: string) => {
     const date = new Date(value)
     const now = new Date()
     const diff = now.getTime() - date.getTime()
@@ -29,4 +29,4 @@ const convertDateWithTime = (value: string) => {
     return `${date.toISOString().slice(0, 10)} ${hours}:${minutes}:${seconds}`
 }
 
-export { convertDate, convertDateWithTime }
+export { convertDate, convertDateWithTimeDifference }

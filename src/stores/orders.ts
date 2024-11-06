@@ -62,16 +62,16 @@ export const useOrders = defineStore('orders', {
 
             const sortEntries = [...this.filteredEntries].sort((a, b) => {
                 const [tag, direction] = this.sort
-
+            
                 if (!tag) {
                     return 0
                 }
 
                 if (direction === 1) {
-                    return a[tag as keyof IOrder]! > b[tag as keyof IOrder]! ? 1 : -1
+                    return a[tag as keyof IOrder]! < b[tag as keyof IOrder]! ? 1 : -1
                 }
 
-                return a[tag as keyof IOrder]! < b[tag as keyof IOrder]! ? 1 : -1
+                return a[tag as keyof IOrder]! > b[tag as keyof IOrder]! ? 1 : -1
             })
 
             const queryEntries = sortEntries.filter(entry => {
@@ -158,7 +158,7 @@ export const useOrders = defineStore('orders', {
             if (response.status !== 200) {
                 return false
             }
-
+            
             this.entries.unshift(response.data)
             return true
         },
