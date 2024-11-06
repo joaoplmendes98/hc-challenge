@@ -8,6 +8,9 @@ import { convertDateWithTime } from '@/assets/helpers/dateHandler'
 import TableComponent from '@/components/Global/Table/Index.vue'
 import BreadcrumbsComponent from '@/components/Global/Breadcrumbs.vue'
 import form from '@/assets/json/users/form.json'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 // Page BreadCrumbs
 const breadcrumbs = [
@@ -95,20 +98,45 @@ const setUpdateForm = (id: number) => {
 	useModal().initModal('form', updateForm)
 }
 
+const setDeleteWarning = (id: number) => {
+	const entry = data.value.find((user: IUser) => user.id === id)
+
+	const warningData = {
+		title: 'Delete User',
+		message: `You're about to delete <b>${entry!.fullName}</b>.<br>Are you sure?`,
+		actions: [
+			{
+				back: true,
+				label: 'Cancel',
+				action: () => useModal().closeModal()
+			},
+			{
+				label: 'Delete',
+				action: () => {
+					useUsers().deleteEntry(id)
+					useModal().closeModal()
+				}
+			}
+		]
+	}
+
+	useModal().initModal('warning', warningData)
+}
+
 // Handle actions
 const handleAction = ([id, action]: [number, string]) => {
-	console.log(id);
-	
 	switch (action) {
 		case 'create':
 			useModal().initModal('form', createForm)
 			break;
 		case 'orders':
+				router.push(`/user/${id}/orders`)
 			break;
 		case 'edit':
 			setUpdateForm(id)
 			break;
 		case 'delete':
+			setDeleteWarning(id)
 			break;
 	}
 }

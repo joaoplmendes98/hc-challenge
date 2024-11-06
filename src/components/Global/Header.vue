@@ -1,15 +1,11 @@
 <template>
     <header>
-        <figure class="logo">
-            <img src="/logo.webp" alt="logo">
-            <h1>Challenge</h1>
-        </figure>
-        <nav>
-            <router-link to="/">
-                <figure class="icon" :style="{ '--icon': 'url(/icons/user.svg)' }" />
-                <p>Users</p>
-            </router-link>
-        </nav>
+        <router-link to="/">
+            <figure class="logo">
+                <img src="/logo.webp" alt="logo">
+                <h1>Challenge</h1>
+            </figure>
+        </router-link>
         <div class="actions">
             <div class="logged-user">
                 <figure />
@@ -31,6 +27,11 @@
         background: white;
         position: sticky;
         top: 0;
+
+        a {
+            text-decoration: none;
+            color: $black;
+        }
 
         .logo {
             height: 32px;
@@ -88,35 +89,6 @@
             }
 
 
-        }
-
-        nav {
-            width: 60%;
-            @include flex-center;
-            gap: 12px;
-
-            a {
-                text-decoration: none;
-                color: black;
-                height: 32px;
-                @include flex-center;
-                gap: 4px;
-                border-radius: 6px;
-                padding-inline: 12px;
-                transition: 0.2s;
-
-                &:hover {
-                    background-color: $grey-100;
-                }
-
-                &.router-link-active {
-                    background-color: $grey-200;
-                }
-
-                p {
-                    font-size: 12px;
-                }
-            }
         }
     }
 </style>

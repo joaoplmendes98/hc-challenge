@@ -88,5 +88,16 @@ export const useUsers = defineStore('users', {
             }
             return true
         },
+
+        async deleteEntry(id: number): Promise<boolean> {
+            const response = await api.delete(`users/${id}`)
+
+            if (response.status !== 204) {
+                return false
+            }
+
+            this.entries = this.entries.filter(entry => entry.id !== id)
+            return true
+        }
     },
 })

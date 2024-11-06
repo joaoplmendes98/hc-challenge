@@ -42,7 +42,7 @@ const call = async (path: string, params: IGenericObject = {}, method: string) =
 
     try {
         const response = await fetch(import.meta.env.VITE_API_URL + path, args)
-        const results = await response.json()
+        const results = args.method === 'DELETE' ? [] : await response.json()
         return {
             data: results,
             status: response.status
