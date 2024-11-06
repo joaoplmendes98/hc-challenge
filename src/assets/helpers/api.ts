@@ -20,7 +20,9 @@ const api = {
 
 const call = async (path: string, params: IGenericObject = {}, method: string) => {
     const headers = new Headers({
-        Accept: 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+    ,
     })
 
     const args: RequestInit = {

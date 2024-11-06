@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
 import FormTemplates from './Templates/Index.vue'
+import type { IGenericObject } from '@/interfaces'
 
 interface IField {
     tag: string
@@ -9,18 +11,29 @@ interface IField {
     required?: boolean
 }
 
-defineProps<{
-    data: IField[]
-}>()
+defineProps({
+    data: {
+        type: Array as () => IField[],
+        required: true
+    }
+})
+
+const emit = defineEmits(['form-submit'])
+
+const finalData = ref<IGenericObject>({})
+
+const handleNewValue = ([tag, value]: [string, any]) => {
+    finalData.value[tag] = value
+}
 
 const handleSumit = () => {
-    console.log('Form Submitted')
+    emit('form-submit', finalData.value)
 }
 </script>
 
 <template>
     <form @submit.prevent="handleSumit">
-        <FormTemplates v-for="field in data" :key="field.tag" :item="field" />
+        <FormTemplates v-for="field in data" :key="field.tag" :item="field" @new-value="handleNewValue" />
     </form>
 </template>
 

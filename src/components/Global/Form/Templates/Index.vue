@@ -9,6 +9,8 @@ const props = defineProps({
     }
 })
 
+const emit = defineEmits(['new-value'])
+
 const activeTemplate = computed(() => {
     switch (props.item.template) {
         case 'input':
@@ -16,8 +18,12 @@ const activeTemplate = computed(() => {
     }
 })
 
+const handleNewValue = ([tag, value]: [string, any]) => {
+    emit('new-value', [tag, value])
+}
+
 </script>
 
 <template>
-    <component :is="activeTemplate" :item="props.item" />
+    <component :is="activeTemplate" :item="props.item" @new-value="handleNewValue" />
 </template>

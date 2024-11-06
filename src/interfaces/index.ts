@@ -5,11 +5,20 @@ interface IGenericObject {
     [key: string]: any
 }
 
+interface IFormField {
+    tag: string
+    label: string
+    template: string
+    type?: string
+    required?: boolean
+}
+
 export type {
     IGenericObject,
     ITableOptions,
     ITableHead,
     ITableBody,
     IPagination,
-    IUser
+    IUser,
+    IFormField
 }

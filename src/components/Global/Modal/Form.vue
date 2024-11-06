@@ -4,6 +4,14 @@ import { useModal } from '@/stores/modal'
 import GlobalForm from '@/components/Global/Form/Index.vue'
 
 const { modalData } = storeToRefs(useModal())
+
+const handleFormSubmition = async (data: any) => {
+    const submition = await modalData.value.onSubmit(data)
+
+    if (submition) {
+        useModal().closeModal()
+    }
+}
 </script>
 
 <template>
@@ -12,7 +20,7 @@ const { modalData } = storeToRefs(useModal())
             <h2 class="md-title">{{modalData.title}}</h2>
         </header>
         <div class="content">
-            <GlobalForm :data="modalData.form" id="modal-form" />
+            <GlobalForm :data="modalData.form" id="modal-form" @form-submit="handleFormSubmition" />
         </div>
         <footer>
             <button type="submit" form="modal-form">
@@ -24,7 +32,8 @@ const { modalData } = storeToRefs(useModal())
 
 <style lang="scss" scoped>
     section {
-        height: min(100%, 700px);
+        height: fit-content;
+        max-height: 100%;
         width: min(100%, 500px);
         background: $white;
         border-radius: 6px;

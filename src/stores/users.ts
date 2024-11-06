@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { IUser, IPagination } from '@/interfaces'
+import type { IUser, IPagination, IGenericObject } from '@/interfaces'
 import api from  '@/assets/helpers/api'
 
 interface UsersStoreState {
@@ -61,6 +61,32 @@ export const useUsers = defineStore('users', {
 
         setQuery(query: string) {
             this.query = query
-        }
+        },
+
+        async createEntry(data: IGenericObject): Promise<boolean> {
+            const response = await api.post('users', data)
+
+            if (response.status !== 200) {
+                return false
+            }
+
+            this.entries.unshift(response.data)
+            return true
+        },
+
+        async updateEntry(id: number, data: IGenericObject): Promise<boolean> {
+            const response = await api.put(`user/${id}/edit`, data)
+
+            if (response.status !== 200) {
+                return false
+            }
+
+            const index = this.entries.findIndex(entry => entry.id === id)
+            this.entries[index] = {
+                ...this.entries[index],
+                ...response.data
+            }
+            return true
+        },
     },
 })

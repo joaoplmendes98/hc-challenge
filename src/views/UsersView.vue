@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUsers } from '@/stores/users'
 import { useModal } from '@/stores/modal'
-import type { IUser, ITableBody, ITableHead, ITableOptions } from '@/interfaces'
+import type { IUser, ITableBody, ITableHead, ITableOptions, IGenericObject, IFormField } from '@/interfaces'
 import { convertDateWithTime } from '@/assets/helpers/dateHandler'
 import TableComponent from '@/components/Global/Table/Index.vue'
 import BreadcrumbsComponent from '@/components/Global/Breadcrumbs.vue'
@@ -21,13 +21,6 @@ const breadcrumbs = [
 	active: true
   }
 ]
-
-// Forms
-const createForm = {
-	title: 'Create User',
-	form,
-	buttonText: 'submit'
-}
 
 // Fetch data on component load
 useUsers().fetchData()
@@ -75,6 +68,33 @@ const tableBodyItems = computed(() => data.value.map((user: IUser): ITableBody[]
 	}
 ])))
 
+// Forms
+const createForm = {
+	title: 'Create User',
+	form,
+	buttonText: 'submit',
+	onSubmit: (params: IGenericObject) => useUsers().createEntry(params)
+}
+
+const setUpdateForm = (id: number) => {
+	const entry = data.value.find((user: IUser) => user.id === id)
+
+	const updateForm = {
+		title: 'Update User',
+		form: form.map((field: IFormField) => {
+			return {
+				...field,
+				required: false,
+				value: entry![field.tag as keyof IUser]
+			}
+		}),
+		buttonText: 'update',
+		onSubmit: (params: IGenericObject) => useUsers().updateEntry(id, params)
+	}
+
+	useModal().initModal('form', updateForm)
+}
+
 // Handle actions
 const handleAction = ([id, action]: [number, string]) => {
 	console.log(id);
@@ -86,6 +106,7 @@ const handleAction = ([id, action]: [number, string]) => {
 		case 'orders':
 			break;
 		case 'edit':
+			setUpdateForm(id)
 			break;
 		case 'delete':
 			break;
