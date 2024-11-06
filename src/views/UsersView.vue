@@ -46,7 +46,7 @@ const tableHead: ITableHead[] = [
 		sortable: true
 	},
 	{
-		label: 'Last Updated',
+		label: 'Last Update',
 		sortable: true
 	}
 ]

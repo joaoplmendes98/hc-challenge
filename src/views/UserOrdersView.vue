@@ -70,7 +70,7 @@ const tableHead: ITableHead[] = [
 		sortable: true
 	},
 	{
-		label: 'Last Updated',
+		label: 'Last Update',
 		tag: 'updatedDate',
 		sortable: true
 	}
