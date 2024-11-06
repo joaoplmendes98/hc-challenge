@@ -63,3 +63,13 @@ figure.icon {
 		background: $black
 	}
 }
+
+// animations
+@keyframes lift {
+    0% {
+        transform: translateY(8px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

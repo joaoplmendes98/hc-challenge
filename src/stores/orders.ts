@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { IOrder, IPagination, IGenericObject } from '@/interfaces'
+import { useAlerts } from './alerts'
 import api from  '@/assets/helpers/api'
 
 interface OrdersStoreState {
@@ -85,8 +86,9 @@ export const useOrders = defineStore('orders', {
 	actions: {
         async fetchData(id: number) {
             const response = await api.get(`orders/${id}`)
-
+            
             if (response.status !== 200) {
+                useAlerts().addAlert('error', response.data.message)
                 return
             }
 
@@ -156,10 +158,12 @@ export const useOrders = defineStore('orders', {
             const response = await api.post('orders', dataToSend)
 
             if (response.status !== 200) {
+                useAlerts().addAlert('error', response.data.message)
                 return false
             }
             
             this.entries.unshift(response.data)
+            useAlerts().addAlert('success', 'Order created successfully')
             return true
         },
 
@@ -167,6 +171,7 @@ export const useOrders = defineStore('orders', {
             const response = await api.put(`order/${id}/edit`, data)
 
             if (response.status !== 200) {
+                useAlerts().addAlert('error', response.data.message)
                 return false
             }
 
@@ -175,6 +180,7 @@ export const useOrders = defineStore('orders', {
                 ...this.entries[index],
                 ...response.data
             }
+            useAlerts().addAlert('success', 'Order edited successfully')
             return true
         },
 
@@ -182,10 +188,12 @@ export const useOrders = defineStore('orders', {
             const response = await api.delete(`orders/${id}`)
 
             if (response.status !== 200) {
+                useAlerts().addAlert('error', response.data.message)
                 return false
             }
 
             this.entries = this.entries.filter(entry => entry.id !== id)
+            useAlerts().addAlert('success', 'Order deleted successfully')
             return true
         },
 

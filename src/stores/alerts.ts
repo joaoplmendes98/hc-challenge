@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 interface AlertsStoreState {
-	alerts: { id: number, type: string, message: string }[]
+	alerts: { id: number, type: string, message: string, dismiss: Function }[]
     id: number
 }
 
@@ -12,10 +12,15 @@ export const useAlerts = defineStore('alerts', {
 	}),
 
 	actions: {
-        addAlert([type, message]: [string, string]) {
+        addAlert(type: string, message: string) {
             const id = this.id
 
-            this.alerts.push({ id, type, message })
+            this.alerts.push({
+                id,
+                type,
+                message,
+                dismiss: () => this.removeAlert(id)
+            })
 
             this.id++
 
