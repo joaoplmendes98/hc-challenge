@@ -174,6 +174,10 @@ const handleQuery = (query: string) => {
 const handleSort = (tag: string) => {
 	useOrders().setSort(tag)
 }
+
+const handlePagination = (direction: number) => {
+	useOrders().setPage(direction)
+}
 </script>
 
 <template>
@@ -192,6 +196,7 @@ const handleSort = (tag: string) => {
 		@new-action="handleAction"
 		@new-query="handleQuery"
 		@new-sort="handleSort"
+		@new-page="handlePagination"
 	/>
 </template>
 

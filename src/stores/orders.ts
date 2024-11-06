@@ -61,7 +61,7 @@ export const useOrders = defineStore('orders', {
             })
             const queriedEntries = sortedQueries.filter(entry => {
                 return entry.product!.toLowerCase().includes(query)
-            }) 
+            })
 
             return queriedEntries.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
         }
@@ -105,6 +105,10 @@ export const useOrders = defineStore('orders', {
             }
 
             this.sort = [tag, currentDirection + 1]
+        },
+
+        setPage(direction: number) {
+            this.currentPage += direction
         },
 
         async createEntry(data: IGenericObject, userId: string): Promise<boolean> {

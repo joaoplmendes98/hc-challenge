@@ -30,7 +30,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['new-action', 'new-query', 'new-sort'])
+const emit = defineEmits(['new-action', 'new-query', 'new-sort', 'new-page'])
 
 const availableWidth = computed(() => props.options.actions ? 92 : 100)
 
@@ -44,6 +44,10 @@ const handleQuery = (query: string) => {
 
 const handleSort = (tag: string) => {
     emit('new-sort', tag)
+}
+
+const handlePagination = (direction: number) => {
+    emit('new-page', direction)
 }
 </script>
 
@@ -85,7 +89,7 @@ const handleSort = (tag: string) => {
                 </p>
             </div>
         </div>
-        <PaginationComponent v-if="options.pagination" :data="pagination" />
+        <PaginationComponent v-if="options.pagination" :data="pagination" @new-page="handlePagination" />
     </div>
 </template>
 

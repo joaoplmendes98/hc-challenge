@@ -9,15 +9,21 @@ const props = defineProps({
         required: true
     }
 })
+
+const emit = defineEmits(['new-page'])
+
+const handlePagination = (direction: number) => {
+    emit('new-page', direction)
+}
 </script>
 
 <template>
     <div class="pagination">
         <ItemsInView :data="data" />
         <div class="actions">
-            <button :disabled="props.data.currentPage === 1">&#60;</button>
+            <button :disabled="props.data.currentPage === 1" @click.prevent="handlePagination(-1)">&#60;</button>
             <p>{{ data.currentPage }}</p>
-            <button :disabled="props.data.currentPage >= props.data.totalPages - 1">&#62;</button>
+            <button :disabled="props.data.currentPage === props.data.totalPages" @click.prevent="handlePagination(1)">&#62;</button>
         </div>
     </div>
 </template>
