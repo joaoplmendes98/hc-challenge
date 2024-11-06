@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import GlobalHeader from './components/Global/Header.vue'
 import GlobalModal from './components/Global/Modal/Index.vue'
+import GlobalAlerts from './components/Global/Alerts/Index.vue'
 import { useModal } from './stores/modal'
 import { storeToRefs } from 'pinia'
 
@@ -16,6 +17,7 @@ const { showModal } = storeToRefs(useModal())
 		<main class="page">
 			<RouterView />
 		</main>
+		<GlobalAlerts />
 	</div>
 </template>
 
