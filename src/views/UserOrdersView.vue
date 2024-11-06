@@ -191,6 +191,9 @@ onUnmounted(() => {
 
 <template>
 	<div class="page-head">
+		<router-link to="/" class="back">
+			< back
+		</router-link>
 		<h1 class="lg-title">
 			User Orders
 		</h1>
@@ -215,5 +218,18 @@ onUnmounted(() => {
 .page-head {
 	display: flex;
 	flex-direction: column;
+	position: relative;
+
+	.back {
+		font-size: 12px;
+		cursor: pointer;
+		transition: 0.2s ease-in-out;
+		text-decoration: none;
+		color: $black;
+
+		&:hover {
+			transform: translateX(4px);
+		}
+	}
 }
 </style>
