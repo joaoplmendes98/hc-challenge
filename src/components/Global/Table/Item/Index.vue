@@ -39,13 +39,13 @@ article {
     height: 40px;
     display: flex;
     align-items: center;
-    padding-inline: 12px;
 
     .column {
         display: flex;
         align-items: center;
         width: var(--column-size);
         height: 100%;
+        padding-inline: 12px;
 
         &.actions {
             width: 8%;

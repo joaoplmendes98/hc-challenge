@@ -7,7 +7,8 @@ interface OrdersStoreState {
     query: string,
     isDataLoaded: boolean,
     currentPage: number,
-    itemsPerPage: number
+    itemsPerPage: number,
+    sort: [string | null, number]
 }
 
 export const useOrders = defineStore('orders', {
@@ -16,7 +17,8 @@ export const useOrders = defineStore('orders', {
         query: '',
 		isDataLoaded: false,
         currentPage: 1,
-        itemsPerPage: 10
+        itemsPerPage: 10,
+        sort: [null, 0]
 	}),
 
     getters: {
@@ -44,7 +46,20 @@ export const useOrders = defineStore('orders', {
         // Return entries paginated and queried
         data(): IOrder[] {
             const query = this.query.toLowerCase()
-            const queriedEntries = this.entries.filter(entry => {
+            const sortedQueries = [...this.entries].sort((a, b) => {
+                const [tag, direction] = this.sort
+
+                if (!tag) {
+                    return 0
+                }
+
+                if (direction === 1) {
+                    return a[tag as keyof IOrder]! > b[tag as keyof IOrder]! ? 1 : -1
+                }
+
+                return a[tag as keyof IOrder]! < b[tag as keyof IOrder]! ? 1 : -1
+            })
+            const queriedEntries = sortedQueries.filter(entry => {
                 return entry.product!.toLowerCase().includes(query)
             }) 
 
@@ -74,6 +89,22 @@ export const useOrders = defineStore('orders', {
 
         setQuery(query: string) {
             this.query = query
+        },
+
+        setSort(tag: string) {
+            const [currentTag, currentDirection] = this.sort
+
+            if (currentTag !== tag) {
+                this.sort = [tag, 1]
+                return
+            }
+
+            if (currentDirection === 2) {
+                this.sort = [null, 0]
+                return
+            }
+
+            this.sort = [tag, currentDirection + 1]
         },
 
         async createEntry(data: IGenericObject, userId: string): Promise<boolean> {
