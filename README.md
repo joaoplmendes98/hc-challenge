@@ -18,7 +18,7 @@ Once the user name, or the order icon, in a specific row is clicked, it takes yo
 ### Features
 An api helper was made in order to keep the code clean.  
 
-A date converter helper was also made.  
+A date converter helper was also made. If a date is from the previous 24h it shows how long ago the action happened, if it's above that it shows the full date and time.
 
 Sorts, filters, and queries are implemented in the table content via code since the APIs don't have these features implemented.
 
