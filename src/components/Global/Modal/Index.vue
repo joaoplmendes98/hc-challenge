@@ -34,5 +34,6 @@ const activeModal = computed(() => {
     backdrop-filter: blur(2px);
     @include flex-center;
     z-index: 100;
+    padding: 20px;
 }
 </style>

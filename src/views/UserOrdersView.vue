@@ -112,7 +112,7 @@ const setUpdateForm = (id: number) => {
 	const entry = data.value.find((entry: IOrder) => entry.id === id)
 
 	const updateForm = {
-		title: 'Update User',
+		title: 'Update Order',
 		form: form.map((field: IFormField) => {
 			return {
 				...field,
